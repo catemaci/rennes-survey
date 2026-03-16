@@ -364,11 +364,17 @@ const SUBMIT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec"
 //  PERSONE  —  modifica questa lista con i tuoi amici!
 // ============================================================
 const PEOPLE = [
-  { key: "persona1", name: "Marco",   img: "https://i.pravatar.cc/400?img=11" },
-  { key: "persona2", name: "Sofia",   img: "https://i.pravatar.cc/400?img=47" },
-  { key: "persona3", name: "Lorenzo", img: "https://i.pravatar.cc/400?img=15" },
-  { key: "persona4", name: "Giulia",  img: "https://i.pravatar.cc/400?img=44" },
-  { key: "persona5", name: "Matteo",  img: "https://i.pravatar.cc/400?img=12" },
+  { key: "persona1", name: "Chiara",   img: "https://i.pravatar.cc/400?img=11" },
+  { key: "persona2", name: "Marco",   img: "https://i.pravatar.cc/400?img=47" },
+  { key: "persona3", name: "Stefano", img: "https://i.pravatar.cc/400?img=15" },
+  { key: "persona4", name: "Caterina",  img: "https://i.pravatar.cc/400?img=44" },
+  { key: "persona5", name: "Tommaso",  img: "https://i.pravatar.cc/400?img=12" },
+  { key: "persona5", name: "Andrea",  img: "https://i.pravatar.cc/400?img=12" },
+  { key: "persona5", name: "Thomas",  img: "https://i.pravatar.cc/400?img=12" },
+  { key: "persona5", name: "Federico",  img: "https://i.pravatar.cc/400?img=12" },
+  { key: "persona5", name: "Ciccio",  img: "https://i.pravatar.cc/400?img=12" },
+  { key: "persona5", name: "Roberto",  img: "https://i.pravatar.cc/400?img=12" },
+  { key: "persona5", name: "Simone",  img: "https://i.pravatar.cc/400?img=12" }
 ];
 
 // ============================================================
@@ -407,7 +413,7 @@ const DIMENSIONS = [
   },
   {
     key: "antitetico", label: "Antitetico",
-    low: "Prevedibile", high: "Pieno di contraddizioni",
+    low: "Prevedibile", high: "Pieno di contraddizioni - Ferrero Rocher",
     def: "Quanto è imprevedibile, pieno di contrasti interni.",
     ex: "Fa sempre la stessa cosa vs. ti sorprende sempre."
   },
@@ -443,7 +449,7 @@ const DIMENSIONS = [
   },
   {
     key: "eterosessualita", label: "Eterosessualità",
-    low: "Spectrum totale", high: "Hetero™ certificato",
+    low: "100-0", high: "Hetero™ 0-100",
     def: "Quanto sembra, percettivamente, proiettare un'identità etero normativa.",
     ex: "Gender-fluid vibe vs. uomo/donna nel senso più classico del termine."
   },
@@ -568,7 +574,7 @@ function render(){
 function renderLanding(card){
   card.innerHTML =
     '<div class="landing-wrap">' +
-      '<div class="landing-badge">\uD83C\uDDEE\uD83C\uDDF9 quiz della crew \uD83C\uDDEE\uD83C\uDDF9</div>' +
+      '<div class="landing-badge">\uD83C\uDDEE\uD83C\uDDF9 quiz \uD83C\uDDEE\uD83C\uDDF9</div>' +
       '<div class="landing-title">Rennes<span>Un covo di italiani</span></div>' +
       '<div class="landing-emojis">\uD83C\uDF55\uD83C\uDF77\uD83E\uDD0C\uD83C\uDF19\u2728</div>' +
       '<div class="landing-subtitle">Chi \xE8 chi?</div>' +
