@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rennes — Un covo di italiani</title>
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #fff9f0;
+    --card: #ffffff;
+    --yellow: #FFE600;
+    --pink: #FF3CAC;
+    --blue: #2BDAC7;
+    --orange: #FF6B35;
+    --purple: #7B2FBE;
+    --dark: #1a1a2e;
+    --muted: #6b6b80;
+    --line: #e8e0d5;
+    --radius: 20px;
+    --font-display: 'Boogaloo', cursive;
+    --font-body: 'Nunito', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--dark);
+    display: flex; align-items: center; justify-content: flex-end;
+    padding: 10px 20px; gap: 14px;
+    border-bottom: 3px solid var(--yellow);
+  }
+
+  .progress-wrap { display: flex; align-items: center; gap: 8px; }
+  .progress-bar {
+    width: 140px; height: 10px;
+    background: rgba(255,255,255,.15);
+    border-radius: 99px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--yellow);
+    border-radius: 99px;
+    transition: width .4s ease;
+  }
+  .progress-text { color: var(--yellow); font-weight: 800; font-size: 13px; min-width: 36px; }
+
+  /* CONTAINER */
+  .container {
+    max-width: 620px; margin: 0 auto;
+    padding: 24px 16px 120px;
+    position: relative; z-index: 1;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 2.5px solid var(--dark);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    box-shadow: 6px 6px 0 var(--dark);
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: var(--dark);
+    padding: 14px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 3px solid var(--yellow);
+  }
+  .bottom-nav.hidden { display: none; }
+
+  .nav-btn {
+    font-family: var(--font-body);
+    font-weight: 800; font-size: 15px;
+    padding: 12px 28px;
+    border: 2.5px solid var(--yellow);
+    border-radius: 99px;
+    cursor: pointer; transition: all .15s;
+  }
+  .nav-btn.nav-left { background: transparent; color: var(--yellow); }
+  .nav-btn.nav-left:hover:not(:disabled) { background: var(--yellow); color: var(--dark); }
+  .nav-btn.nav-right { background: var(--yellow); color: var(--dark); }
+  .nav-btn.nav-right:hover:not(:disabled) { background: #fff200; }
+  .nav-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+  /* LANDING */
+  .landing-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 18px; padding: 10px 0;
+  }
+  .landing-badge {
+    background: var(--yellow); color: var(--dark);
+    font-family: var(--font-display);
+    font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+    padding: 5px 16px; border-radius: 99px;
+    border: 2px solid var(--dark);
+  }
+  .landing-title {
+    font-family: var(--font-display);
+    font-size: clamp(56px, 18vw, 88px);
+    line-height: 1; color: var(--dark);
+  }
+  .landing-title span {
+    display: block; color: var(--pink);
+    text-shadow: 3px 3px 0 var(--dark);
+  }
+  .landing-subtitle {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 6vw, 32px);
+    color: var(--purple); line-height: 1.2;
+  }
+  .landing-emojis {
+    font-size: 38px; letter-spacing: 6px;
+    animation: wiggle 2s infinite;
+  }
+  @keyframes wiggle {
+    0%,100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  .landing-instructions {
+    background: var(--dark); color: #fff;
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    font-size: 15px; line-height: 1.6;
+    text-align: left; width: 100%;
+    border: 2.5px solid var(--dark);
+  }
+  .landing-instructions strong { color: var(--yellow); }
+
+  .start-btn {
+    font-family: var(--font-display);
+    font-size: 26px; letter-spacing: 1px;
+    background: var(--pink); color: #fff;
+    border: 3px solid var(--dark);
+    border-radius: 99px;
+    padding: 14px 44px;
+    cursor: pointer;
+    box-shadow: 5px 5px 0 var(--dark);
+    transition: all .15s; width: 100%;
+  }
+  .start-btn:hover {
+    background: var(--purple);
+    transform: translate(-2px,-2px);
+    box-shadow: 7px 7px 0 var(--dark);
+  }
+  .start-btn:active { transform: translate(3px,3px); box-shadow: 2px 2px 0 var(--dark); }
+
+  /* CASE */
+  .case-header h2 {
+    font-family: var(--font-display);
+    font-size: 28px; margin-bottom: 4px;
+  }
+  .counter-badge {
+    display: inline-block;
+    background: var(--yellow); color: var(--dark);
+    font-weight: 900; font-size: 13px;
+    padding: 3px 12px; border-radius: 99px;
+    border: 2px solid var(--dark);
+    margin-bottom: 12px;
+  }
+
+  .person-card {
+    border: 2.5px solid var(--dark);
+    border-radius: var(--radius);
+    overflow: hidden; margin: 16px 0;
+    box-shadow: 4px 4px 0 var(--dark);
+  }
+  .person-card img {
+    width: 100%; max-height: 320px;
+    object-fit: cover; display: block;
+  }
+  .person-card-name {
+    padding: 12px 16px;
+    font-family: var(--font-display); font-size: 22px;
+    background: var(--dark); color: var(--yellow);
+    text-align: center;
+  }
+
+  .section-label {
+    font-family: var(--font-display);
+    font-size: 20px; margin: 22px 0 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 2px;
+    background: var(--line);
+  }
+
+  /* SLIDERS */
+  .slider-row {
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px; margin-bottom: 10px;
+    transition: border-color .2s, background .2s;
+  }
+  .slider-row.touched { border-color: var(--blue); background: #f0fdfb; }
+
+  .slider-top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px;
+  }
+  .slider-label {
+    font-weight: 800; font-size: 15px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .info-dot {
+    width: 20px; height: 20px;
+    background: var(--purple); color: #fff;
+    border-radius: 50%; font-size: 12px; font-weight: 900;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; border: 2px solid var(--dark); flex-shrink: 0;
+  }
+  .info-dot:hover { background: var(--pink); }
+
+  .scale-extremes {
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: var(--muted); font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  input[type='range'] {
+    width: 100%; -webkit-appearance: none;
+    height: 8px; border-radius: 99px;
+    background: linear-gradient(to right, var(--blue) 50%, #ddd 50%);
+    outline: none; cursor: pointer;
+  }
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--pink); border: 3px solid var(--dark);
+    cursor: pointer; box-shadow: 2px 2px 0 var(--dark);
+    transition: transform .1s;
+  }
+  input[type='range']::-webkit-slider-thumb:active { transform: scale(1.3); }
+
+  /* FINAL */
+  .final-wrap { text-align: center; padding: 10px 0; }
+  .final-title { font-family: var(--font-display); font-size: 42px; margin-bottom: 10px; }
+  .final-sub { font-size: 16px; color: var(--muted); margin-bottom: 24px; }
+
+  .submit-btn {
+    font-family: var(--font-display); font-size: 28px;
+    background: var(--blue); color: var(--dark);
+    border: 3px solid var(--dark); border-radius: 99px;
+    padding: 16px 48px; cursor: pointer;
+    box-shadow: 5px 5px 0 var(--dark);
+    transition: all .15s; width: 100%;
+  }
+  .submit-btn:hover:not(:disabled) {
+    background: var(--yellow);
+    transform: translate(-2px,-2px);
+    box-shadow: 7px 7px 0 var(--dark);
+  }
+  .submit-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+  /* NOTICE */
+  .notice {
+    background: #fff9e6; border: 2px solid var(--yellow);
+    border-radius: 12px; padding: 12px 16px;
+    font-size: 14px; color: var(--muted); margin: 12px 0;
+  }
+
+  /* MODAL */
+  .modal { display: none; position: fixed; inset: 0; z-index: 9999; }
+  .modal.show { display: flex; align-items: flex-end; justify-content: center; }
+  .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.5); }
+  .modal-panel {
+    position: relative; z-index: 1;
+    background: var(--card); border: 3px solid var(--dark);
+    border-radius: 24px 24px 0 0; padding: 24px;
+    width: 100%; max-width: 620px; max-height: 80vh; overflow-y: auto;
+    box-shadow: 0 -4px 0 var(--dark);
+  }
+  .modal-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px;
+  }
+  .modal-head h3 { font-family: var(--font-display); font-size: 22px; }
+  .icon-btn {
+    background: var(--dark); color: #fff;
+    border: none; border-radius: 50%;
+    width: 32px; height: 32px; font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-def { font-size: 15px; line-height: 1.6; margin-bottom: 12px; }
+  .modal-example { background: var(--bg); border-radius: 10px; padding: 12px; }
+  .modal-example-title { font-weight: 800; font-size: 13px; margin-bottom: 4px; color: var(--purple); }
+
+  /* SUCCESS */
+  .success-wrap { text-align: center; padding: 20px 0; }
+  .success-emoji { font-size: 72px; margin-bottom: 10px; }
+  .success-title { font-family: var(--font-display); font-size: 42px; margin-bottom: 10px; }
+  .success-sub { font-size: 16px; color: var(--muted); }
+
+  /* VALIDATION HINT */
+  .required-hint {
+    display: none; color: var(--pink);
+    font-size: 13px; font-weight: 700; margin-top: 8px;
+  }
+  .required-hint.show { display: block; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="progress-wrap">
+    <div class="progress-bar">
+      <div id="progressFill" class="progress-fill" style="width:0%"></div>
+    </div>
+    <div id="progressText" class="progress-text">0%</div>
+  </div>
+</header>
+
+<main class="container">
+  <section id="stageCard" class="card"></section>
+</main>
+
+<div class="bottom-nav hidden" id="bottomNav">
+  <button id="backBtn" class="nav-btn nav-left" disabled>&#8592; Indietro</button>
+  <button id="nextBtn" class="nav-btn nav-right" disabled>Avanti &#8594;</button>
+</div>
+
+<!-- Modale definizioni -->
+<div id="defModal" class="modal" aria-hidden="true">
+  <div class="modal-backdrop" id="defModalBackdrop"></div>
+  <div class="modal-panel" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <h3 id="defModalTitle"></h3>
+      <button id="defModalClose" class="icon-btn" aria-label="Chiudi">&#x2715;</button>
+    </div>
+    <div>
+      <p id="defModalDef" class="modal-def"></p>
+      <div class="modal-example">
+        <div class="modal-example-title">Come intenderlo</div>
+        <p id="defModalExampleText" style="font-size:13px; color:var(--muted);"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  CONFIG
+// ============================================================
+
+// Sostituisci con il tuo Google Apps Script Web App URL
+const SUBMIT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+
+// ============================================================
+//  PERSONE  —  modifica questa lista con i tuoi amici!
+// ============================================================
+const PEOPLE = [
+  { key: "persona1", name: "Marco",   img: "https://i.pravatar.cc/400?img=11" },
+  { key: "persona2", name: "Sofia",   img: "https://i.pravatar.cc/400?img=47" },
+  { key: "persona3", name: "Lorenzo", img: "https://i.pravatar.cc/400?img=15" },
+  { key: "persona4", name: "Giulia",  img: "https://i.pravatar.cc/400?img=44" },
+  { key: "persona5", name: "Matteo",  img: "https://i.pravatar.cc/400?img=12" },
+];
+
+// ============================================================
+//  DIMENSIONI
+// ============================================================
+const DIMENSIONS = [
+  {
+    key: "sex_appeal", label: "Sex Appeal",
+    low: "Zero appeal", high: "Magnetico/a",
+    def: "Quanto emana fascino fisico e sensuale.",
+    ex: "Uno sguardo che brucia vs. una presenza che non si nota."
+  },
+  {
+    key: "parental", label: "Parental Attitude",
+    low: "Peter Pan", high: "Genitore totale",
+    def: "Quanto si comporta da figura di riferimento e genitore del gruppo.",
+    ex: "Dice 'stai attento' vs. fa quello che vuole senza pensare agli altri."
+  },
+  {
+    key: "anima_festa", label: "Anima della festa",
+    low: "Muretto umano", high: "Centro del mondo",
+    def: "Capacità di animare, trascinare e accendere l'ambiente.",
+    ex: "Guarda da un angolo vs. sale sul tavolo e balla."
+  },
+  {
+    key: "prestante", label: "Prestante",
+    low: "Da divano", high: "Fisicamente imponente",
+    def: "Presenza fisica, forza percepita, fisicità.",
+    ex: "Floscio vs. esemplare atletico."
+  },
+  {
+    key: "pucciosa", label: "Pucciosità",
+    low: "Adulto serio", high: "Cucciolo umano",
+    def: "Quanto è tenero/a, adorabile, da abbracciare.",
+    ex: "Freddo e distante vs. morbido e coccioso."
+  },
+  {
+    key: "antitetico", label: "Antitetico",
+    low: "Prevedibile", high: "Pieno di contraddizioni",
+    def: "Quanto è imprevedibile, pieno di contrasti interni.",
+    ex: "Fa sempre la stessa cosa vs. ti sorprende sempre."
+  },
+  {
+    key: "teatrale", label: "Teatrale",
+    low: "Monotono", high: "Oscar guaranteed",
+    def: "Quanto esagera, drammatizza, mette in scena la vita.",
+    ex: "Parla piano senza gesti vs. reazione da film drammatico."
+  },
+  {
+    key: "diplomatico", label: "Diplomatico",
+    low: "Elefante in cristalleria", high: "ONU in persona",
+    def: "Abilità nel gestire tensioni, mediare e non fare danni.",
+    ex: "Dice sempre tutto quello che pensa vs. trova sempre la parola giusta."
+  },
+  {
+    key: "malizioso", label: "Malizioso",
+    low: "Innocente totale", high: "Doppio senso su tutto",
+    def: "Quanto è furbo/a, malizioso/a, con secondo fine.",
+    ex: "Ingenuo come un bambino vs. ogni frase ha un doppio senso."
+  },
+  {
+    key: "gossipparo", label: "Gossipparo",
+    low: "Tombe sigillate", high: "Televisore sempre acceso",
+    def: "Quanto ama spettegolare e raccontare i fatti altrui.",
+    ex: "Non sa nulla di nessuno vs. sa tutto di tutti."
+  },
+  {
+    key: "proplayer", label: "Proplayer",
+    low: "Main casual", high: "TAS irl",
+    def: "Quanto è competitivo/a, abile e orientato alla performance.",
+    ex: "Gioca solo per divertirsi vs. winning is the only option."
+  },
+  {
+    key: "eterosessualita", label: "Eterosessualità",
+    low: "Spectrum totale", high: "Hetero™ certificato",
+    def: "Quanto sembra, percettivamente, proiettare un'identità etero normativa.",
+    ex: "Gender-fluid vibe vs. uomo/donna nel senso più classico del termine."
+  },
+];
+
+// ============================================================
+//  STATE
+// ============================================================
+let stageIndex   = 0;
+let caseIndex    = 0;
+let isSubmitting = false;
+let hasSubmitted = false;
+const people     = [...PEOPLE];
+
+const sessionId = (typeof crypto !== "undefined" && crypto.randomUUID)
+  ? crypto.randomUUID() : String(Date.now());
+
+const payload = {
+  sessionId,
+  startedAt: new Date().toISOString(),
+  cases: {}
+};
+
+// Stage helpers
+const STAGE_LANDING = 0;
+const firstCase  = () => 1;
+const lastCase   = () => people.length;
+const stageFinal = () => people.length + 1;
+const totalS     = () => stageFinal() + 1;
+const isCaseSt   = (s) => s >= firstCase() && s <= lastCase();
+
+function $(id){ return document.getElementById(id); }
+
+// ============================================================
+//  HELPERS
+// ============================================================
+function setProgress(){
+  const pct = totalS() > 1 ? Math.round((stageIndex / (totalS() - 1)) * 100) : 0;
+  const fill = $("progressFill");
+  const text = $("progressText");
+  if(fill) fill.style.width = pct + "%";
+  if(text) text.innerText  = pct + "%";
+}
+
+function scrollTop(){
+  try { window.scrollTo({ top: 0, behavior: "auto" }); } catch(_) { window.scrollTo(0, 0); }
+}
+
+function showNav(show){
+  const nav = $("bottomNav");
+  if(nav) nav.classList.toggle("hidden", !show);
+}
+
+function ensureCase(key){
+  if(!payload.cases[key]){
+    const sliders = {};
+    DIMENSIONS.forEach(d => { sliders[d.key] = { value: 0.5, touched: false }; });
+    payload.cases[key] = { sliders };
+  }
+}
+
+function canNext(){
+  if(stageIndex === STAGE_LANDING) return false;
+  if(isCaseSt(stageIndex)){
+    const p = people[caseIndex];
+    if(!p) return false;
+    ensureCase(p.key);
+    return DIMENSIONS.every(d => payload.cases[p.key].sliders[d.key].touched);
+  }
+  if(stageIndex === stageFinal()) return !isSubmitting && !hasSubmitted;
+  return true;
+}
+
+function updateNav(){
+  if(hasSubmitted){ showNav(false); return; }
+  if(stageIndex === STAGE_LANDING){ showNav(false); return; }
+  showNav(true);
+  const back = $("backBtn");
+  const next = $("nextBtn");
+  if(!back || !next) return;
+  back.disabled = (stageIndex <= 1) || isSubmitting;
+  const isLast = stageIndex === stageFinal();
+  next.disabled = !canNext() || isSubmitting;
+  next.innerText = isLast
+    ? (isSubmitting ? "Invio in corso…" : "Invia risposte \uD83D\uDE80")
+    : "Avanti \u2192";
+}
+
+function openModal(dimKey){
+  const dim = DIMENSIONS.find(d => d.key === dimKey);
+  if(!dim) return;
+  $("defModalTitle").innerText      = dim.label;
+  $("defModalDef").innerText        = dim.def || "";
+  $("defModalExampleText").innerText = dim.ex || "";
+  const m = $("defModal");
+  m.classList.add("show");
+  m.setAttribute("aria-hidden","false");
+}
+
+function closeModal(){
+  const m = $("defModal");
+  m.classList.remove("show");
+  m.setAttribute("aria-hidden","true");
+}
+
+// ============================================================
+//  RENDER
+// ============================================================
+function render(){
+  setProgress(); updateNav();
+  const card = $("stageCard");
+  if(!card) return;
+  card.innerHTML = "";
+  requestAnimationFrame(scrollTop);
+  if(stageIndex === STAGE_LANDING)   renderLanding(card);
+  else if(isCaseSt(stageIndex))      renderCase(card);
+  else                                renderFinal(card);
+  updateNav();
+}
+
+/* ── LANDING ── */
+function renderLanding(card){
+  card.innerHTML =
+    '<div class="landing-wrap">' +
+      '<div class="landing-badge">\uD83C\uDDEE\uD83C\uDDF9 quiz della crew \uD83C\uDDEE\uD83C\uDDF9</div>' +
+      '<div class="landing-title">Rennes<span>Un covo di italiani</span></div>' +
+      '<div class="landing-emojis">\uD83C\uDF55\uD83C\uDF77\uD83E\uDD0C\uD83C\uDF19\u2728</div>' +
+      '<div class="landing-subtitle">Chi \xE8 chi?</div>' +
+      '<div class="landing-instructions">' +
+        '<strong>Come funziona:</strong> Risponderai ad una serie di domande pensando alla persona nella foto.<br><br>' +
+        'Le risposte sono <strong>anonime</strong> e vengono raccolte solo per divertimento collettivo.<br><br>' +
+        'Sposta ogni slider almeno una volta per continuare. Fidati del tuo istinto! \uD83E\uFAF5' +
+      '</div>' +
+      '<button class="start-btn" id="startBtn">\uD83C\uDF89 Inizia il quiz!</button>' +
+    '</div>';
+
+  $("startBtn").addEventListener("click", function(){
+    stageIndex = 1;
+    caseIndex  = 0;
+    render();
+  });
+}
+
+/* ── CASE ── */
+function renderCase(card){
+  const p = people[caseIndex];
+  if(!p){ stageIndex = stageFinal(); render(); return; }
+  ensureCase(p.key);
+
+  var slidersHTML = DIMENSIONS.map(function(d){ return sliderHTML(d, p.key); }).join("");
+
+  card.innerHTML =
+    '<div class="case-header">' +
+      '<span class="counter-badge">Persona ' + (caseIndex+1) + ' di ' + people.length + '</span>' +
+      '<h2>' + p.name + '</h2>' +
+    '</div>' +
+    '<div class="person-card">' +
+      '<img src="' + p.img + '" alt="' + p.name + '" />' +
+      '<div class="person-card-name">' + p.name + '</div>' +
+    '</div>' +
+    '<div class="notice">' +
+      '\uD83D\uDD79\uFE0F Sposta <strong>tutti</strong> gli slider almeno una volta per procedere. Fidati dell\'istinto!' +
+    '</div>' +
+    '<div class="section-label">Caratteristiche</div>' +
+    '<div id="slidersWrap">' + slidersHTML + '</div>' +
+    '<div class="required-hint" id="reqHint">\uD83D\uDC46 Devi spostare tutti gli slider!</div>';
+
+  // slider events
+  card.querySelectorAll("input[type='range']").forEach(function(r){
+    var dk = r.getAttribute("data-dim");
+    updateTrack(r);
+    r.addEventListener("input", function(){
+      payload.cases[p.key].sliders[dk].value   = Number(r.value);
+      payload.cases[p.key].sliders[dk].touched = true;
+      updateTrack(r);
+      var row = r.closest(".slider-row");
+      if(row) row.classList.add("touched");
+      updateNav();
+      var hint = $("reqHint");
+      if(hint) hint.classList.remove("show");
+    });
+  });
+
+  // info dots
+  card.querySelectorAll("[data-def]").forEach(function(el){
+    el.addEventListener("click", function(){ openModal(el.getAttribute("data-def")); });
+  });
+
+  updateNav();
+}
+
+function sliderHTML(dim, pkey){
+  var s = (payload.cases[pkey] && payload.cases[pkey].sliders[dim.key])
+    ? payload.cases[pkey].sliders[dim.key]
+    : { value: 0.5, touched: false };
+
+  return '<div class="slider-row ' + (s.touched ? 'touched' : '') + '">' +
+    '<div class="slider-top">' +
+      '<div class="slider-label">' +
+        dim.label +
+        '<span class="info-dot" data-def="' + dim.key + '" role="button" tabindex="0">?</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="scale-extremes">' +
+      '<span>' + dim.low + '</span>' +
+      '<span>' + dim.high + '</span>' +
+    '</div>' +
+    '<input type="range" min="0" max="1" step="0.01" value="' + s.value + '" data-dim="' + dim.key + '" />' +
+  '</div>';
+}
+
+function updateTrack(r){
+  var v = Number(r.value) * 100;
+  r.style.background = "linear-gradient(to right, var(--blue) " + v + "%, #ddd " + v + "%)";
+}
+
+/* ── FINAL ── */
+function renderFinal(card){
+  card.innerHTML =
+    '<div class="final-wrap">' +
+      '<div style="font-size:64px; margin-bottom:8px;">\uD83E\uDEC6</div>' +
+      '<div class="final-title">Quasi fatto!</div>' +
+      '<p class="final-sub">Hai valutato tutte e ' + people.length + ' le persone.<br>Premi il bottone per inviare le tue risposte (anonime) \uD83D\uDC47</p>' +
+      '<button class="submit-btn" id="submitBtn">Invia risposte \uD83D\uDE80</button>' +
+      '<p style="margin-top:14px; font-size:12px; color:var(--muted);">Puoi tornare indietro con \u2190 Indietro per modificare qualcosa.</p>' +
+    '</div>';
+
+  $("submitBtn").addEventListener("click", doSubmit);
+}
+
+/* ── SUCCESS ── */
+function renderSuccess(){
+  var card = $("stageCard");
+  card.innerHTML =
+    '<div class="success-wrap">' +
+      '<div class="success-emoji">\uD83C\uDF8A</div>' +
+      '<div class="success-title">Grazie mille!</div>' +
+      '<p class="success-sub">Le tue risposte sono state registrate correttamente.<br>Puoi chiudere questa pagina. Sei un mito! \uD83E\uDD0C\u2728</p>' +
+    '</div>';
+  showNav(false);
+}
+
+// ============================================================
+//  NAVIGATION
+// ============================================================
+function goNext(){
+  if(hasSubmitted) return;
+  if(!canNext()){
+    var h = $("reqHint");
+    if(h) h.classList.add("show");
+    return;
+  }
+  if(isCaseSt(stageIndex)){
+    if(stageIndex < lastCase()) caseIndex++;
+  }
+  if(stageIndex < stageFinal()){ stageIndex++; render(); }
+  else { doSubmit(); }
+}
+
+function goBack(){
+  if(hasSubmitted || isSubmitting) return;
+  if(isCaseSt(stageIndex) && stageIndex > firstCase()) caseIndex--;
+  stageIndex = Math.max(1, stageIndex - 1);
+  render();
+}
+
+// ============================================================
+//  SUBMIT
+// ============================================================
+async function doSubmit(){
+  if(isSubmitting || hasSubmitted) return;
+  isSubmitting = true;
+  payload.completedAt = new Date().toISOString();
+  updateNav();
+  var ok = await sendPayload();
+  isSubmitting = false;
+  if(ok){
+    hasSubmitted = true;
+    renderSuccess();
+  } else {
+    updateNav();
+    alert("\u274C Errore nell'invio. Controlla la connessione e riprova!");
+  }
+}
+
+async function sendPayload(){
+  if(!SUBMIT_URL || SUBMIT_URL.includes("YOUR_SCRIPT_ID")){
+    console.warn("SUBMIT_URL non configurato. Payload:", JSON.stringify(payload, null, 2));
+    return true; // in dev: considera OK
+  }
+  try {
+    var params = new URLSearchParams();
+    params.set("payload", JSON.stringify(payload));
+    var res = await fetch(SUBMIT_URL, { method: "POST", body: params });
+    return res.ok;
+  } catch(e) {
+    console.error(e);
+    return false;
+  }
+}
+
+// ============================================================
+//  WIRE UP
+// ============================================================
+$("backBtn").addEventListener("click", goBack);
+$("nextBtn").addEventListener("click", goNext);
+$("defModalClose").addEventListener("click", closeModal);
+$("defModalBackdrop").addEventListener("click", closeModal);
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeModal(); });
+
+// INIT
+render();
+</script>
+</body>
+</html>
